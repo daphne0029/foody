@@ -8,6 +8,7 @@ import '../less/user.less';
 export default class Users extends React.Component {
 
   state = {
+    userLoaded: false,
     user: {},
     userFoods: []
   }
@@ -56,7 +57,7 @@ export default class Users extends React.Component {
 
   componentDidMount() {
     axios.get(`${process.env.REACT_APP_PUBLIC_API_URL}/users/${this.props.match.params.userId}`).then((response) => {
-      this.setState({user: response.data});
+      this.setState({user: response.data, userLoaded: true});
     })
     
     axios.get(`${process.env.REACT_APP_PUBLIC_API_URL}/users/${this.props.match.params.userId}/foods`).then((response) => {
@@ -65,8 +66,11 @@ export default class Users extends React.Component {
   }
 
   render() {
-    return (
-      <div>
+    let view;
+    if (this.state.userLoaded && !this.state.user.id) {
+      view = <div>User ID {this.props.match.params.userId} not found!</div>;
+    } else {
+      view = <div>
         <h1>User information</h1>
         <p>ID: {this.state.user.id}</p>
         <p>Name: {this.state.user.name}</p>
@@ -99,7 +103,8 @@ export default class Users extends React.Component {
               </tr>)}
           </tbody>
         </table>
-      </div>
-    )
+      </div>;
+    }
+    return (view)
   }
 }
