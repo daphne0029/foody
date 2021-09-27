@@ -34,6 +34,11 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @Get(':id/reports/most-consumed-nutrient')
+  async getMostConsumedNutrient(@Param('id') id: number) {
+    return this.usersService.getMostConsumedNutrient(id);
+  }
+
   @Patch(':id')
   async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     await this.usersService.update(id, updateUserDto);

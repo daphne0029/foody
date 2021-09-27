@@ -1,4 +1,6 @@
 import { UserFood } from '../../user-foods/entities/user-food.entity';
+import { FoodNutrient } from '../../food-nutrients/entities/food-nutrient.entity';
+
 import {
   Entity,
   BaseEntity,
@@ -20,4 +22,7 @@ export class Food extends BaseEntity {
 
   @OneToMany(() => UserFood, (userFood) => userFood.food)
   userFoods: UserFood[];
+
+  @OneToMany(() => FoodNutrient, (foodNutrient) => foodNutrient.food)
+  foodNutrients: FoodNutrient[];
 }
